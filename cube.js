@@ -15,8 +15,10 @@ var playing = false;
 var timer;
 
 // Display settings
-const ox = 300, oy = 600;
 const cube_size = 60;
+const width = canvas.width, height = canvas.height;
+const ox = canvas.width / 2 - 3 * cube_size / 4 * (LPR - 1), 
+oy = canvas.height / 2 + ((cube_size + 2) * (LPR - 1) - (cube_size / 4) * (LPR - 1)) / 2;
 const s_light_size = 6, u_light_size = 4; // selected / unselected
 
 // Event Listeners
@@ -47,10 +49,10 @@ function drawCube(frame) {
 
 	for (i = 0; i < LPR; i++) {
 		// repeat squares
-		var i_index = i * 64;
+		var i_index = i * LPR * LPR;
 		for ( j = 0; j < LPR; j++) {
 			// repeat lines
-			var j_index = j * 8;
+			var j_index = j * LPR;
 			for (k = 0; k < LPR; k++) {
 				// draw edges			
 				ctx.strokeStyle = "rgba(200, 200, 200, .25)";
@@ -122,6 +124,7 @@ function togglePlay() {
 
 function mouseDown(e) {
 	// offsetX, offsetY
+	var i, j;
 	if (axis < 3) { // cannot edit in "all" mode
 		// find corresponding light in layer/axis
 		switch (axis) {
