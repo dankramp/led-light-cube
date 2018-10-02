@@ -8,10 +8,10 @@ This program will be used for creating animated patterns for LED Light Cubes.
 
 ## Inputs
 ### Mouse
-Click on lights in the selected layer to turn them on or off for the current frame. You can change the frame by using the slider at the bottom (10 total frames available).
+- Click on lights in the selected layer to turn them on or off for the current frame
+- Change the frame by using the slider at the bottom (10 total frames available).
 
 ### Keyboard
-#### Axes
 - _x/y/z/a_ -> switch between viewing layers on different axes
   - You can only toggle lights on the selected layer on the current axis
   - _'a'_ is 'all' axes. In this mode, all layers are selected but you cannot toggle lights
