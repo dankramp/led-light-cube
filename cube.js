@@ -45,7 +45,6 @@ function drawCube(frame) {
 	var x_offset = 0;
 	var size = 4;
 
-	ctx.strokeStyle = "rgba(200, 200, 200, .2)";
 	for (i = 0; i < LPR; i++) {
 		// repeat squares
 		var i_index = i * 64;
@@ -53,7 +52,8 @@ function drawCube(frame) {
 			// repeat lines
 			var j_index = j * 8;
 			for (k = 0; k < LPR; k++) {
-				// draw edges
+				// draw edges			
+				ctx.strokeStyle = "rgba(200, 200, 200, .25)";
 				if (k > 0) {
 					ctx.moveTo(ox + x_offset + k * cube_size, oy + y_offset - k * 2);
 					ctx.lineTo(ox + x_offset + (k-1) * cube_size, oy + y_offset - (k-1) * 2);
@@ -70,12 +70,14 @@ function drawCube(frame) {
 
 				// draw selected lights larger
 				if ( (axis == 0 && k == layer) || (axis == 1 && j == layer) || ( axis == 2 && i == layer) || axis == 3 || playing ) {
-					ctx.fillStyle = frame[i_index + j_index + k] ? "rgba(90, 150, 255, .2)" : "rgba(90, 90, 90, .5)";
+					ctx.fillStyle = frame[i_index + j_index + k] ? "rgba(90, 150, 255, .3)" : "rgba(90, 90, 90, .5)";
+					ctx.strokeStyle = "rgba(160, 160, 160, .9)";
 					size = s_light_size;
 				} else {
 					ctx.fillStyle = frame[i_index + j_index + k] ? "rgba(90, 150, 255, .06)" : "rgba(200, 200, 200, .2)";
+					ctx.strokeStyle = "rgba(200, 200, 200, .2)";
 					size = u_light_size;
-				}				
+				}
 				if (frame[i_index + j_index + k]) { // glowing
 					for (var g = 0; g < 4; g++) {						
 						ctx.beginPath();
@@ -84,10 +86,14 @@ function drawCube(frame) {
 					}
 					ctx.fillStyle = "rgb(255, 255, 255)";
 					size -=2;
+					ctx.beginPath();
+					ctx.arc(ox + x_offset + k * cube_size, oy + y_offset - k * 2, size, 0, Math.PI * 2, true);
+					ctx.fill();
+				} else {					
+					ctx.beginPath();
+					ctx.arc(ox + x_offset + k * cube_size, oy + y_offset - k * 2, size, 0, Math.PI * 2, true);
+					ctx.stroke();
 				}
-				ctx.beginPath();
-				ctx.arc(ox + x_offset + k * cube_size, oy + y_offset - k * 2, size, 0, Math.PI * 2, true);
-				ctx.fill();
 				
 			}
 			y_offset -= cube_size;
