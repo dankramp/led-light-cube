@@ -70,15 +70,25 @@ function drawCube(frame) {
 
 				// draw selected lights larger
 				if ( (axis == 0 && k == layer) || (axis == 1 && j == layer) || ( axis == 2 && i == layer) || axis == 3 || playing ) {
-					ctx.fillStyle = frame[i_index + j_index + k] ? "rgba(90, 100, 255, 1)" : "rgba(90, 90, 90, .5)";
+					ctx.fillStyle = frame[i_index + j_index + k] ? "rgba(90, 150, 255, .2)" : "rgba(90, 90, 90, .5)";
 					size = s_light_size;
 				} else {
-					ctx.fillStyle = frame[i_index + j_index + k] ? "rgba(90, 100, 255, .2)" : "rgba(200, 200, 200, .2)";
+					ctx.fillStyle = frame[i_index + j_index + k] ? "rgba(90, 150, 255, .06)" : "rgba(200, 200, 200, .2)";
 					size = u_light_size;
 				}				
+				if (frame[i_index + j_index + k]) { // glowing
+					for (var g = 0; g < 4; g++) {						
+						ctx.beginPath();
+						ctx.arc(ox + x_offset + k * cube_size, oy + y_offset - k * 2, (size+4-g*2), 0, Math.PI * 2, true);
+						ctx.fill();
+					}
+					ctx.fillStyle = "rgb(255, 255, 255)";
+					size -=2;
+				}
 				ctx.beginPath();
 				ctx.arc(ox + x_offset + k * cube_size, oy + y_offset - k * 2, size, 0, Math.PI * 2, true);
 				ctx.fill();
+				
 			}
 			y_offset -= cube_size;
 		}
@@ -160,12 +170,19 @@ function mouseDown(e) {
 
 function keyboardInput(e) {
     e = e || window.event;
+    console.log(e.keyCode);
     if (e.keyCode >= 88 && e.keyCode <= 90) { // x, y, or z
     	axis = e.keyCode - 88;
     } else if (e.keyCode == 65) { // 'a' for all-axis
     	axis = 3;
     } else if (e.keyCode == 32) { // space -> play
     	togglePlay();
+     } else if (e.keyCode == 219 || e.keyCode == 221) { // brackets
+     	frame_index = (frame_index + e.keyCode - 220) % 10;
+     	if (frame_index < 0) {
+     		frame_index += 10;
+     	}
+     	updateSlider();
      } else if (e.keyCode >= 37 && e.keyCode <= 40) { // arrow key
     	if (axis == 1) { // y-axis layer change
 		    if (e.keyCode == 38 && layer < LPR - 1) { // up arrow

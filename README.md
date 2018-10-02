@@ -20,3 +20,5 @@ This program will be used for creating animated patterns for LED Light Cubes.
   - _right/left_ changes selected layer in _x/z_ axis modes
 - _spacebar_-> toggle 'play' mode. Play mode progresses through frames automatically at 1 fps.
   - 'all' axis mode is enforced when playing
+- _'[/]'_ -> changes current frame
+  - _'[' will switch to the previous frame; ']' switches to the next frame
